@@ -1,42 +1,192 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.clock-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.clock-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 60px 80px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   text-align: center;
+  min-width: 600px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.time-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.time-segment {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.time-segment:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.time-number {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+
+.time-separator {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0.8;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 0.8;
   }
-  to {
-    transform: rotate(360deg);
+  50%, 100% {
+    opacity: 0.2;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.period {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-left: 15px;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.date-display {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin-bottom: 40px;
+  font-weight: 500;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.format-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.format-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.format-toggle:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .clock-card {
+    padding: 40px 30px;
+    min-width: auto;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .time-number {
+    font-size: 3.5rem;
+  }
+
+  .time-separator {
+    font-size: 3.5rem;
+  }
+
+  .time-segment {
+    padding: 15px 20px;
+  }
+
+  .period {
+    font-size: 1.5rem;
+    margin-top: 15px;
+  }
+
+  .date-display {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .format-toggle {
+    padding: 10px 25px;
+    font-size: 0.9rem;
   }
 }
 
-.card {
-  padding: 2em;
-}
+@media (max-width: 480px) {
+  .clock-card {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
 
-.read-the-docs {
-  color: #888;
+  .time-number {
+    font-size: 2.5rem;
+  }
+
+  .time-separator {
+    font-size: 2.5rem;
+  }
+
+  .time-segment {
+    padding: 10px 15px;
+  }
+
+  .period {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+  .date-display {
+    font-size: 1rem;
+    margin-bottom: 25px;
+  }
+
+  .format-toggle {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
 }

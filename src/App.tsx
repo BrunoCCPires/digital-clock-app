@@ -1,36 +1,80 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [time, setTime] = useState(new Date())
+  const [is24Hour, setIs24Hour] = useState(true)
 
-  console.log(import.meta.env)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const formatTime = (date: Date) => {
+    let hours = date.getHours()
+    const minutes = date.getMinutes()
+    const seconds = date.getSeconds()
+    let period = ''
+
+    if (!is24Hour) {
+      period = hours >= 12 ? 'PM' : 'AM'
+      hours = hours % 12 || 12
+    }
+
+    const hoursStr = String(hours).padStart(2, '0')
+    const minutesStr = String(minutes).padStart(2, '0')
+    const secondsStr = String(seconds).padStart(2, '0')
+
+    return { hoursStr, minutesStr, secondsStr, period }
+  }
+
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    }
+    return date.toLocaleDateString('en-US', options)
+  }
+
+  const { hoursStr, minutesStr, secondsStr, period } = formatTime(time)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="clock-container">
+      <div className="clock-card">
+        <div className="time-display">
+          <div className="time-segment">
+            <span className="time-number">{hoursStr}</span>
+          </div>
+          <span className="time-separator">:</span>
+          <div className="time-segment">
+            <span className="time-number">{minutesStr}</span>
+          </div>
+          <span className="time-separator">:</span>
+          <div className="time-segment">
+            <span className="time-number">{secondsStr}</span>
+          </div>
+          {!is24Hour && <span className="period">{period}</span>}
+        </div>
+        
+        <div className="date-display">
+          {formatDate(time)}
+        </div>
+
+        <div className="controls">
+          <button 
+            className="format-toggle"
+            onClick={() => setIs24Hour(!is24Hour)}
+          >
+            {is24Hour ? '12-Hour' : '24-Hour'} Format
+          </button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
